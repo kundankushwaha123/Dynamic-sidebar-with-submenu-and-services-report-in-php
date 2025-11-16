@@ -1,0 +1,101 @@
+# Project Documentation
+
+## Overview
+
+This project implements three key modules inside the dashboard system:
+
+1. **Secure Login & Session Handling**
+2. **Dynamic Sidebar Navigation**
+3. **Service Consumption Report (DataTable.js with Date Filter)**
+
+All modules are integrated using **PHP 8+, MySQL (XAMPP environment)**, **AJAX with jQuery**, and **DataTables.js** for reporting.
+
+---
+
+## Database Tables Used
+
+1. **Users Table** – Stores registered users .
+2. **Sidebar Table (`assdt_sidebar`)** – Stores menu items, links, and sorting order.
+3. **Transactions Table (`assdt_service_consumption_table`)** – Stores user transactions with service names and transaction amounts.
+
+---
+
+## Module 1 – Login & Session
+
+* Users can log in with their email and password.
+* The system validates login credentials securely.
+* On success, a **session** is created to keep the user logged in.
+* Unauthorized access is restricted:
+
+  * If not logged in, the system redirects to the login page.
+  * If logged in, users are redirected to the dashboard.
+
+ **Benefit for user**: Secure access to dashboard features, only authorized users can enter.
+
+---
+
+## Module 2 – Dynamic Sidebar
+
+* The sidebar menu is not hardcoded.
+* Menu items are **fetched from the database** (`assdt_sidebar` table).
+* The function `renderSidebar()` dynamically builds menu items inside the template.
+* Menu order is maintained using the `sort_order` column.
+
+ **Benefit for user**: Admin can add, remove, or reorder sidebar menus directly from the database without changing code.
+
+---
+
+## Module 3 – Service Consumption Report
+
+* The report displays **User IDs** and their **total transaction amounts per service**.
+* Implemented using **DataTables.js plugin** with **AJAX + PHP backend**.
+* A **date range filter** is provided:
+
+  * User selects From Date and To Date.
+  * Data loads dynamically without page reload.
+* The backend uses:
+
+  * **Aggregate functions (SUM)** to calculate totals.
+  * **Aliases** for readability.
+  * **Array functions** (`array_merge`, `array_map`) to structure JSON data for DataTables.
+
+ **Benefit for user**:
+
+* Easy to analyze how much each service is used per user.
+* Data can be searched, sorted, and paginated.
+* Report matches the required format:
+
+```
+UserID     Service 1     Service 2   ...   Service N
+35128625   SUM(...)      SUM(...)    ...   SUM(...)
+61096340   SUM(...)      SUM(...)    ...   SUM(...)
+```
+
+---
+
+## Technology Used
+
+* **PHP 8+** (Backend & functions)
+* **MySQL (XAMPP)** (Database)
+* **AJAX + jQuery** (Frontend async requests)
+* **DataTables.js** (Interactive reporting table)
+
+---
+
+## Key Functions & Techniques
+
+* **renderSidebar()** → Custom function to render sidebar dynamically.
+* **Aggregate Functions (SUM, GROUP BY)** → To calculate service totals.
+* **Array Handling (array_merge, array_map)** → To format final JSON response.
+* **Session Handling** → To protect dashboard pages.
+* **Alias in SQL** → For cleaner query results.
+
+---
+
+## Final Outcome
+
+* Secure login & session management.
+* Fully dynamic sidebar navigation.
+* Interactive service consumption report with date filters.
+
+This makes the system **user-friendly, secure, and easily manageable** without requiring frequent code changes.
